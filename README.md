@@ -1,2 +1,2 @@
-# PolySnake-
-A Simple Java Game - PolySnake
+# JustDodge ~
+A Simple Java Game - JustDodge
