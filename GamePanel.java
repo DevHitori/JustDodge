@@ -21,10 +21,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 	public GamePanel () {
 
 		setBackground(Color.BLACK);
-		addKeyListener(this);			// respond to key events
+		addKeyListener(this);
 		setFocusable(true);
-    		requestFocus();    			// the GamePanel now has focus, so receives key events
-
+    		requestFocus();
 		loadClips ();
 
 		gameThread = null;
@@ -32,15 +31,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 
 	}
 
-	// implementation of Runnable interface
+
 
 	public void run () {
 		try {
 			isRunning = true;
 			while (isRunning) {
+                                character.draw();
 				gameUpdate();
 				gameRender();
-				Thread.sleep (200);	// increase value of sleep time to slow down ball
+				Thread.sleep(100);
 			}
 		}
 		catch(InterruptedException e) {}
@@ -62,11 +62,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 			character.moveRight();
 		}
 		else
-		if (keyCode == KeyEvent.VK_UP) {
+		if (keyCode == KeyEvent.VK_DOWN) {
 			character.moveUp();
 		}
 		else
-		if (keyCode == KeyEvent.VK_DOWN) {
+		if (keyCode == KeyEvent.VK_UP) {
 			character.moveDown();
 		}
 	}
@@ -82,7 +82,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 
 		try {
 			playSound = Applet.newAudioClip (
-					getClass().getResource("resources/sounds/Megalovania.wav"));
+					getClass().getResource("./resources/sounds/Megalovania.wav"));
 
 		}
 		catch (Exception e) {
@@ -104,7 +104,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 
 	public void gameRender () {				// draw the game objects
 		obj1.draw();
-		character.draw();
 	}
 
 
@@ -114,10 +113,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 
 	public void startGame() {				// initialise and start the game thread
 		requestFocus();
+
+
+
 		if (gameThread == null) {
 			isRunning = true;
+			System.out.println("JTEST");
 			character = new Character (this);
+			System.out.println("JTEST");
 			obj1 = new Obj1 (this, character);
+			System.out.println("JTEST");
 			playSound.stop();
 			playSound.loop();
 			gameThread = new Thread(this);
